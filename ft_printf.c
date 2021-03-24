@@ -5,6 +5,35 @@
 
 char		*ft_itoa(int n);
 
+int 		ft_tolower(int c);
+
+char *ft_pointer_conv(void *p)
+{
+	long int		quot;
+	long int		rem;
+	int 			i;
+	int				j;
+	char			*hex;
+
+	putchar('0');
+	putchar('x');
+	j = 0;
+	quot = (long int)p;
+	hex = malloc(sizeof(long int));
+	while (quot != 0)
+	{
+		rem = quot % 16;
+		if (rem < 10)
+			hex[j++] = 48 + rem;
+		else
+			hex[j++] = 55 + rem;
+		quot = quot / 16;
+	}
+	i = j;
+	while (i >= 0)
+		putchar(ft_tolower(hex[i--]));
+}
+
 int			ft_printf(const char *s, ...)
 {
 	/* 
@@ -89,12 +118,7 @@ int			ft_printf(const char *s, ...)
 			/* Pointer conversion */
 			{
 				ptest = (char **)va_arg(list, char *);
-				printstring = ptest;
-				printf("%p", printstring);
-				charcount += strlen(printstring);
-				while (*printstring)
-					putchar(*printstring++);
-				s++;
+				printstring = ft_pointer_conv(ptest);
 			}
 		}
 		else
