@@ -7,11 +7,11 @@ char		*ft_itoa(int n);
 
 int 		ft_tolower(int c);
 
-char *ft_pointer_conv(void *p)
+char 		*ft_pointer_conv(void *p)
 {
 	long int		quot;
 	long int		rem;
-	int 			i;
+	int				i;
 	int				j;
 	char			*hex;
 
@@ -32,6 +32,7 @@ char *ft_pointer_conv(void *p)
 	i = j;
 	while (i >= 0)
 		putchar(ft_tolower(hex[i--]));
+	return (hex);
 }
 
 int			ft_printf(const char *s, ...)
@@ -117,8 +118,10 @@ int			ft_printf(const char *s, ...)
 			else if (*s == 'p')
 			/* Pointer conversion */
 			{
-				ptest = (char **)va_arg(list, char *);
-				printstring = ft_pointer_conv(ptest);
+					ptest = va_arg(list, char *);
+					printstring = (char *)ft_pointer_conv(ptest);
+					charcount += strlen(printstring) + 2;
+					s++;
 			}
 		}
 		else
@@ -144,12 +147,18 @@ int main()
 	int		my_return;
 
 	test2 = 777;
+
 	printf("Original function:\n");
 	original_return = printf("Thank you, %s! But our princess is in castle %i.\n", test, test2);
-	printf("This is the test2 address %p\n", &test2);
+	printf("The original printf read %i characters!\n", original_return);
+
+	original_return = printf("Printing the address of test2: %p. \n", &test2);
+	printf("The original read %i characters.\n", original_return);
+
 	printf("My function:\n");
 	my_return = ft_printf("Thank you, %s! But our princess is in castle %i.\n", test, test2);
-	ft_printf("This is test2 address %p\n", &test2);
-	printf("The original printf read %d characters!\n", original_return);
-	printf("My printf read %d characters!\n", my_return);
+	printf("My printf read %i characters!\n", my_return);
+
+	my_return = ft_printf("Printing the address of test2: %p. \n", &test2);
+	printf("My function read %i characters.\n", my_return);
 }
