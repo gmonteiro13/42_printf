@@ -1,3 +1,5 @@
+# THIS IS A WORK IN PROGRESS!
+
 The goal of this project is to recode libc's printf (print formatted) function
 It will manage the following conversions: cspdiuxX%
 It will manage any combination of the following flags: ’-0.*’ and minimum field width with all conversions
@@ -22,11 +24,45 @@ The flags mentioned above works as follows:
 
 LEFT-JUSTIFY:
 To use the left-justify flag, you need to specify the field width. For example, the output of the
+```c
+printf("%-dhello?", 777);
 ```
-printf("%-d", 777)
+is just
 ```
+777hello?
+```
+with no spaces after it. If the specified width is equal or smaller the number of digits that you want to print, 
+the output will be the same as the above.
 
-MUST ADD EXAMPLES
+For example:
+```c
+printf("%-2dhello?\n", 777);
+printf("%-3dhello?", 777);
+```
+produces the output
+```
+777hello?
+777hello?
+```
+As you can see, the left-justify does not shorten the number if you use a small width, and does nothing if the number of
+digits is the same of the width. For this example, you'll have to set a width > 3.
+```c
+printf("%-4dhello?\n", 777);
+printf("%-8dhello?", 777);
+```
+produces the output
+```
+777 hello?
+777     hello?
+```
+Remember that the minus sign of a negative number is also considered as a digit.
+```c
+printf("%-4dhello?", -777);
+```
+outputs
+```
+-777hello?
+```
 
 INTRODUCTION
 
