@@ -35,6 +35,37 @@ char 		*ft_pointer_conv(void *p)
 	return (hex);
 }
 
+char		*ft_hex_conv(int hex_num, char *s)
+{
+	unsigned int quot;
+	unsigned int rem;
+	int i;
+	int j;
+	char *hex_char;
+
+	j = 0;
+	quot = (unsigned int)hex_num;
+	hex_char = malloc(sizeof(int));
+	while (quot != 0)
+	{
+		rem = quot % 16;
+		if (rem < 10)
+			hex_char[j++] = 48 + rem;
+		else
+			hex_char[j++] = 55 + rem;
+		quot = quot / 16;
+	}
+	i = j;
+	while (i >= 0)
+	{
+		if (*s == 120)
+			putchar(ft_tolower(hex_char[i--]));
+		else
+			putchar(hex_char[i--]);
+	}
+	return (hex_char);
+}
+
 int			ft_printf(const char *s, ...)
 {
 	/* 
@@ -94,7 +125,7 @@ int			ft_printf(const char *s, ...)
 				/* When we're done, we have to go to the next character
 				(which is "!") */
 			}
-			else if (*s == 'i')
+			else if (*s == 'i' || *s == 'd')
 			/* Integer conversion */
 			{
 				/*
@@ -123,6 +154,13 @@ int			ft_printf(const char *s, ...)
 					charcount += strlen(printstring) + 2;
 					s++;
 			}
+			else if (*s == 'x' || *s == 'X')
+			{
+				printinteger = va_arg(list, int);
+				integerstring = ft_hex_conv(printinteger, (char *)s);
+				charcount += strlen(integerstring);
+				s++;
+			}
 		}
 		else
 		{
@@ -137,28 +175,4 @@ int			ft_printf(const char *s, ...)
 	}
 	va_end(list);
 	return (charcount);
-}
-
-int main()
-{
-	char	test[6] = "Mario";
-	int		test2;
-	int		original_return;
-	int		my_return;
-
-	test2 = 777;
-
-	printf("Original function:\n");
-	original_return = printf("Thank you, %s! But our princess is in castle %i.\n", test, test2);
-	printf("The original printf read %i characters!\n", original_return);
-
-	original_return = printf("Printing the address of test2: %p. \n", &test2);
-	printf("The original read %i characters.\n", original_return);
-
-	printf("My function:\n");
-	my_return = ft_printf("Thank you, %s! But our princess is in castle %i.\n", test, test2);
-	printf("My printf read %i characters!\n", my_return);
-
-	my_return = ft_printf("Printing the address of test2: %p. \n", &test2);
-	printf("My function read %i characters.\n", my_return);
 }

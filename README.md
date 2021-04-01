@@ -20,6 +20,12 @@ The flags mentioned above works as follows:
 .*: The precision is not specified in the format string, but as an additional integer value argument...
 ... preceding the argument that has to be formatted
 
+LEFT-JUSTIFY:
+To use the left-justify flag, you need to specify the field width. For example, the output of the
+```
+printf("%-d", 777)
+```
+
 MUST ADD EXAMPLES
 
 INTRODUCTION
