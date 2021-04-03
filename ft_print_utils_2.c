@@ -6,11 +6,11 @@
 /*   By: gsoares- <gsoares-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 01:18:35 by gsoares-          #+#    #+#             */
-/*   Updated: 2021/04/03 01:19:00 by gsoares-         ###   ########.fr       */
+/*   Updated: 2021/04/03 01:50:03 by gsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 size_t		treat_x(va_list list, int width, char *s)
 {

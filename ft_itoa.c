@@ -6,12 +6,11 @@
 /*   By: gsoares- <gsoares-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 21:59:34 by gabriel-scm       #+#    #+#             */
-/*   Updated: 2021/04/01 20:21:58 by gsoares-         ###   ########.fr       */
+/*   Updated: 2021/04/03 01:50:14 by gsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdlib.h>
+#include "ft_printf.h"
 
 static int ft_intlen(int n)
 {

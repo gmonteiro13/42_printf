@@ -6,11 +6,11 @@
 /*   By: gsoares- <gsoares-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 01:03:11 by gsoares-          #+#    #+#             */
-/*   Updated: 2021/04/03 01:13:48 by gsoares-         ###   ########.fr       */
+/*   Updated: 2021/04/03 01:50:08 by gsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 char *ft_pointer_conv(void *p)
 {

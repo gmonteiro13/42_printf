@@ -6,7 +6,7 @@
 #    By: gsoares- <gsoares-@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/03 00:55:55 by gsoares-          #+#    #+#              #
-#    Updated: 2021/04/03 01:38:36 by gsoares-         ###   ########.fr        #
+#    Updated: 2021/04/03 01:51:39 by gsoares-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC		= gcc
 FLAGS	= -Wall -Werror -Wextra
 CREATE	= ar crs
 NAME	= libftprintf.a
-LIB		= libftprintf.h
+LIB		= ft_printf.h
 
 FUNCS	= ft_printf.c ft_print_utils.c ft_print_utils_2.c ft_itoa.c
 
