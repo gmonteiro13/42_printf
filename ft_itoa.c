@@ -6,13 +6,14 @@
 /*   By: gsoares- <gsoares-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 21:59:34 by gabriel-scm       #+#    #+#             */
-/*   Updated: 2021/03/17 16:24:59 by gsoares-         ###   ########.fr       */
+/*   Updated: 2021/04/01 20:21:58 by gsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include <stdlib.h>
 
-static int			ft_intlen(int n)
+static int ft_intlen(int n)
 {
 	int				len;
 	unsigned int	result;

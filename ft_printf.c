@@ -2,12 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
-char		*ft_itoa(int n);
+char *ft_itoa(int n);
 
-int 		ft_tolower(int c);
-
-char 		*ft_pointer_conv(void *p)
+char *ft_pointer_conv(void *p)
 {
 	long int		quot;
 	long int		rem;
@@ -31,7 +30,7 @@ char 		*ft_pointer_conv(void *p)
 	}
 	i = j;
 	while (i >= 0)
-		putchar(ft_tolower(hex[i--]));
+		putchar(tolower(hex[i--]));
 	return (hex);
 }
 
@@ -59,115 +58,160 @@ char		*ft_hex_conv(int hex_num, char *s)
 	while (i >= 0)
 	{
 		if (*s == 120)
-			putchar(ft_tolower(hex_char[i--]));
+			putchar(tolower(hex_char[i--]));
 		else
 			putchar(hex_char[i--]);
 	}
 	return (hex_char);
 }
 
+int			left_justify(char *s)
+{
+	char *size;
+	int i;
+
+	size = malloc(sizeof(char) * 100);
+	i = 0;
+	while (isdigit(*s))
+		size[i++] = *s++;
+	i = atoi(size);
+	free(size);
+	return (i);
+}
+
+size_t		treat_s(va_list list, int width)
+{
+	size_t	length;
+	int		i;
+	char	*printstring;
+
+	i = 0;
+	printstring = va_arg(list, char *);
+	length = strlen(printstring);
+	while (*printstring)
+		putchar(*printstring++);
+	if (width > length)
+	{
+		while ((width - length) > i)
+		{
+			putchar(' ');
+			i++;
+		}
+	}
+	return (length + i);
+}
+
+size_t		treat_d_i(va_list list, int width)
+{
+	int		printinteger;
+	int		i;
+	size_t	length;
+	char	*integerstring;
+
+	i = 0;
+	printinteger = va_arg(list, int);
+	integerstring = ft_itoa(printinteger);
+	length = strlen(integerstring);
+	while (*integerstring)
+		putchar(*integerstring++);
+	if (width > length)
+	{
+		while ((width - length) > i)
+		{
+			putchar(' ');
+			i++;
+		}
+	}
+	return (length + i);
+}
+
+size_t		treat_p(va_list list, int width)
+{	
+	void	*p;
+	char	*printstring;
+	int		i;
+	size_t	length;
+
+	i = 0;
+	p = va_arg(list, char *);
+	printstring = (char *)ft_pointer_conv(p);
+	length = strlen(printstring) + 2;
+	if (width > length)
+	{
+		while ((width - length) > i)
+		{
+			putchar(' ');
+			i++;
+		}
+	}
+	return (length + i);
+}
+
+size_t		treat_x(va_list list, int width, char *s)
+{
+	int		printinteger;
+	int		i;
+	size_t 	length;
+	char	*integerstring;
+
+	i = 0;
+	printinteger = va_arg(list, int);
+	integerstring = ft_hex_conv(printinteger, (char *)s);
+	length = strlen(integerstring);
+	if (width > length)
+	{
+		while ((width - length) > i)
+		{
+			putchar(' ');
+			i++;
+		}
+	}
+	return (length + i);
+}
+
 int			ft_printf(const char *s, ...)
 {
-	/* 
-	We need to use vararg to iterate through the arguments
-	*/
 	va_list	list;
-
-	/*
-	For this example, our function will print a string or a integer
-	so we will declare two variables to help us
-	*/
-	char	*printstring;
-	char	*integerstring;
-	int		printinteger;
-	void	*ptest;
-
-	/*
-	The return value is the number of characters printed, so we'll
-	need to declare a variable that counts this number
-	*/
 	size_t	charcount;
+	int		width;
 
-	/*
-	va_start takes two arguments: a va_list object and a reference to
-	the function's last parameter
-	*/
 	va_start(list, s);
-
-	/*
-	Next, we will start iterating through the string (s).
-	*/
 	charcount = 0;
 	while (*s)
 	{
-		/*
-		Finding a "%" means that we'll need to check the next character
-		to do the appropriate conversion (char, int, etc..)
-		*/
 		if (*s == '%')
 		{
 			s++;
-			/* Goes to the next character */
-			if (*s == 's')
-			/* String conversion */
+			if (*s == '-')
 			{
-				printstring = va_arg(list, char *);
-				/* va_arg takes two arguments, a va_list (previously initialised)
-				and a type descriptor. The current value stored in the list is "Hello" */
-				charcount += strlen(printstring);
-				/* This will add the length of the argument ("Hello" = 5)
-				to the character count */
-				while (*printstring)
-					putchar(*printstring++);
-				/* We have to print the argument character by character ("H", then
-				"e", then "l"... */
+				width = left_justify((char *)++s);
 				s++;
-				/* When we're done, we have to go to the next character
-				(which is "!") */
+			}
+			else
+				width = 0;
+			if (*s == 's')
+			{
+				charcount += treat_s(list, width);
+				s++;
 			}
 			else if (*s == 'i' || *s == 'd')
-			/* Integer conversion */
 			{
-				/*
-				Invocating va_arg successively allow processing each
-				of the variable arguments in turn.
-				So it will automatically go to the next argument, which
-				is "777"
-				*/
-				printinteger = va_arg(list, int);
-				/*
-				We need to convert the integer 777 into a string,
-				so we can count the characters and print them.
-				ft_itoa will be used.
-				*/
-				integerstring = ft_itoa(printinteger);
-				charcount += strlen(integerstring);
-				while (*integerstring)
-					putchar(*integerstring++);
+				charcount += treat_d_i(list, width);
 				s++;
 			}
 			else if (*s == 'p')
-			/* Pointer conversion */
 			{
-					ptest = va_arg(list, char *);
-					printstring = (char *)ft_pointer_conv(ptest);
-					charcount += strlen(printstring) + 2;
-					s++;
+				charcount += treat_p(list, width);
+				s++;
 			}
 			else if (*s == 'x' || *s == 'X')
 			{
-				printinteger = va_arg(list, int);
-				integerstring = ft_hex_conv(printinteger, (char *)s);
-				charcount += strlen(integerstring);
+				charcount += treat_x(list, width, (char *)s);
 				s++;
 			}
 		}
 		else
 		{
-			/*
-			If we don't find a "%", we have to print the current character,
-			move on to the next and add 1 to the character count
-			*/
 				putchar(*s);
 				s++;
 				charcount++;
