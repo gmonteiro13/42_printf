@@ -71,26 +71,22 @@ char *ft_hex_conv(int hex_num, char *s)
 	return (hex_char);
 }
 
-size_t treat_s(va_list list, int width)
+size_t treat_s(va_list list, int width, int space)
 {
 	size_t length;
-	int i;
 	char *printstring;
 
-	i = 0;
 	printstring = va_arg(list, char *);
+	if (printstring == NULL)
+		return (0);
 	length = strlen(printstring);
+	if (space)
+		ft_putnchar(' ', (width - length));
 	while (*printstring)
 		putchar(*printstring++);
-	if (width > length)
-	{
-		while ((width - length) > i)
-		{
-			putchar(' ');
-			i++;
-		}
-	}
-	return (length + i);
+	if (width > length && !space)
+		ft_putnchar(' ', (width - length));
+	return (length + (width - length));
 }
 
 size_t treat_d_i(va_list list, int width)

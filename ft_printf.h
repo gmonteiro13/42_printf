@@ -23,10 +23,11 @@ int		ft_printf(const char *s, ...);
 char	*ft_itoa(int n);
 char	*ft_pointer_conv(void *p);
 char	*ft_hex_conv(int hex_num, char *s);
-size_t	treat_s(va_list list, int width);
+size_t	treat_s(va_list list, int width, int space);
 size_t 	treat_d_i(va_list list, int width);
 size_t 	treat_p(va_list list, int width);
 size_t	treat_x(va_list list, int width, char *s);
+void	ft_putnchar(char c, int i);
 int		left_justify(char *s);
 
 #endif

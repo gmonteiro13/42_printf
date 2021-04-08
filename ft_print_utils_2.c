@@ -47,3 +47,12 @@ int left_justify(char *s)
 	free(size);
 	return (i);
 }
+
+void	ft_putnchar(char c, int i)
+{
+	if (!c || !i || i <= 0)
+		return ;
+	while (i--)
+		putchar(c);
+	return ;
+}
